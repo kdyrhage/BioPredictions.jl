@@ -18,19 +18,22 @@ function charge(sequence, pKvalues = pKtable["solomon"], pH = 7.0)
 end
 
 
-function pI(sequence, pKvalues = pKtable["solomon"], gamma = 0.001)
+"""
+    pI(sequence, [pKvalues, gamma])
+"""
+function pI(sequence::AminoAcidSequence, pKvalues = pKtable["solomon"]; gamma = 0.001)
     pH = 7.0
 
     if charge(sequence, pKvalues, pH) < 0
         pHs = 0:gamma:7
-        charges = charge.(sequence, pKvalues, pHs)
+        charges = charge.(Ref(sequence), Ref(pKvalues), pHs)
         pH = pHs[findmin(abs.(charges))[2]]
         return pH
     end
 
     if charge(sequence, pKvalues, pH) > 0
         pHs = 7:gamma:14
-        charges = charge.(sequence, pKvalues, pHs)
+        charges = charge.(Ref(sequence), Ref(pKvalues), pHs)
         pH = pHs[findmin(abs.(charges))[2]]
         return pH
     end
