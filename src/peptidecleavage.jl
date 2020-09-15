@@ -4,10 +4,10 @@
 Predict cleavage sites. Returns a vector of cleavage site indices and a vector
 containing the resulting peptides. Currently only supports trypsin.
 """
-function cleave(seq::AminoAcidSequence)
+function cleave(seq::LongAminoAcidSeq)
     seq = copy(seq)
     seq[end] != AA_Term && push!(seq, AA_Term)
-    peptides = AminoAcidSequence[]
+    peptides = LongAminoAcidSeq[]
     cleavagesites = Int[]
     last = 0
     for i in 3:length(seq)-1

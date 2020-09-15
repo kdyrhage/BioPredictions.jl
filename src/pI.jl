@@ -21,7 +21,7 @@ end
 """
     pI(sequence, [pKvalues, gamma])
 """
-function pI(sequence::AminoAcidSequence, pKvalues = pKtable["solomon"]; gamma = 0.001)
+function pI(sequence::LongAminoAcidSeq, pKvalues = pKtable["solomon"]; gamma = 0.001)
     pH = 7.0
 
     if charge(sequence, pKvalues, pH) < 0
