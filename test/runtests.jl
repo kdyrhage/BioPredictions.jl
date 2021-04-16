@@ -20,5 +20,6 @@ end
 end
 
 @testset "Cleavage sites" begin
-    @test cleave(seq) == (positions = [2, 12], peptides = LongAminoAcidSeq[aa"AR", aa"NDCQEGHILK", aa"KMFPSTWYVOUBJZX"])
+    @test cleave(seq[1:20]) == (positions = [2, 12], peptides = LongAminoAcidSeq[aa"AR", aa"NDCQEGHILK", aa"MFPSTWYV"])
+    @test cleave(seq[1:20], ProteinStats.proteinaseK) == (positions = [1, 7, 10, 11, 14, 17, 18, 19], peptides = LongAminoAcidSeq[aa"A", aa"RNDCQE", aa"GHI", aa"L", aa"KMF", aa"PST", aa"W", aa"Y", aa"V"])
 end
