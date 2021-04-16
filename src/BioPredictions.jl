@@ -1,4 +1,4 @@
-module ProteinStats
+module BioPredictions
 
 export pI, weight, gravy, cleave
 
