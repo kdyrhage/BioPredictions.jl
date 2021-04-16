@@ -1,5 +1,5 @@
 # ProteinStats.jl
-A package for calculating simple protein statistics. Included are:
+A package for calculating and estimating simple statistics for biomolecules. Included are:
 - Isoelectric point
 - Molecular weight
 - GRAVY index

@@ -1,4 +1,9 @@
-# https://www.ncbi.nlm.nih.gov/pubmed/7108955?dopt=Abstract
+"""
+    gravy(sequence)
+
+Calculate GRAVY index of `sequence`.
+Source: https://www.ncbi.nlm.nih.gov/pubmed/7108955
+"""
 function gravy(sequence)
     aacomposition = BioSequences.composition(sequence)
     gravy = 0.0
