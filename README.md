@@ -7,7 +7,7 @@ A package for simple estimations and predictions for biomolecules. Included are:
 
 # Usage
 ```julia
-julia> using BioSequences, BioSequences
+julia> using BioSequences, BioPredictions
 julia> seq = aa"MTPSIRQPLRLRRLPATVSPGGETDAMEYRELPQPQPIPSDGLAEAASPNRLLGYLLLHWPMVLILGSMLGAGMAYLAYTLIPAKYTTYAMIRVALVPPSVSGFQNEEAARNDFLTCLKTQTQLIKSHFVLNAAIRDPAIAELPMIRSQVDPVAFLQDEVRVEYTDNS";
 julia> weight(seq)
 18567.54638
