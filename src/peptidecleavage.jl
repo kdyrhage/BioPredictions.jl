@@ -9,7 +9,7 @@ Available (but unexported) options for `protease` are
 - `proline_endopeptidase`
 For details on cleavage sites, see https://web.expasy.org/peptide_cutter/peptidecutter_enzymes.html
 """
-function cleave(seq::LongAminoAcidSeq, protease::Function = trypsin)
+function cleave(seq::LongAA, protease::Function = trypsin)
     seq = ungap(seq)
     cleavagesites = Int[]
     last = 0
