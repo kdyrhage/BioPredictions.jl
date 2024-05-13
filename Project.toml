@@ -5,11 +5,15 @@ version = "0.2.0"
 
 [deps]
 BioSequences = "7e6ae17a-c86d-528c-b3b9-7f778a29fe59"
+GenomicAnnotations = "4f8a0a0a-376d-5ac0-ab14-e88793df67f0"
+Kmers = "445028e4-d31f-4f27-89ad-17affd83fc22"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
 BioSequences = "3"
 StatsBase = "0.34"
+GenomicAnnotations = "0.3"
+Kmers = "0.1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
