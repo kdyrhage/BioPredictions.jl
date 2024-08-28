@@ -1,7 +1,7 @@
 name = "BioPredictions"
 uuid = "f0e87614-88dd-4ce1-82cf-ccfcfa8b4dc2"
 authors = ["Karl Dyrhage <karl.dyrhage@gmail.com>"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 BioSequences = "7e6ae17a-c86d-528c-b3b9-7f778a29fe59"

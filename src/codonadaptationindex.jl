@@ -92,7 +92,7 @@ function cai(chrs)
     oc = optimal_codons(cf)
     genes = @genes(chrs, CDS, iscomplete(gene))
     result = fill(0.0, length(genes))
-    for (i, gene) in enumerate(genes)
+    Threads.@threads for (i, gene) in enumerate(genes)
         result[i] = cai(gene, cf, oc)
     end
     result
