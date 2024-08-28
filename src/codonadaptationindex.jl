@@ -84,7 +84,7 @@ function cai(gene, cf, oc)
     for (i, codon) in enumerate(codons)
         w[i] = relative_adaptiveness(codon[2], cf, oc)
     end
-    geomean(w)
+    isempty(w) ? 0.0 : geomean(w)
 end
 
 function cai(chrs)
