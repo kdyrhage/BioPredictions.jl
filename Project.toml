@@ -12,7 +12,7 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 [compat]
 BioSequences = "3"
 StatsBase = "0.34"
-GenomicAnnotations = "0.3"
+GenomicAnnotations = "0.3,0.4"
 Kmers = "0.1"
 
 [extras]
