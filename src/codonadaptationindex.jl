@@ -78,14 +78,15 @@ function relative_adaptiveness(codon, cf, oc)
     get(cf, codon, 0.0) / get(oc, codon, 0.0)
 end
 
-function cai(gene, cf, oc)
-    codons = SpacedKmers{DNACodon}(sequence(gene), 3)
+function cai(seq::LongDNA, cf, oc)
+    codons = SpacedKmers{DNACodon}(seq, 3)
     w = fill(0.0, length(collect(codons)))
     for (i, codon) in enumerate(codons)
         w[i] = relative_adaptiveness(codon[2], cf, oc)
     end
     isempty(w) ? 0.0 : geomean(w)
 end
+cai(gene, cf, oc) = cai(sequence(gene), cf, oc)
 
 function cai(chrs)
     cf = codon_frequencies(chrs)

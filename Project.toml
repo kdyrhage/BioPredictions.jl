@@ -1,7 +1,7 @@
 name = "BioPredictions"
 uuid = "f0e87614-88dd-4ce1-82cf-ccfcfa8b4dc2"
 authors = ["Karl Dyrhage <karl.dyrhage@gmail.com>"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 BioSequences = "7e6ae17a-c86d-528c-b3b9-7f778a29fe59"
@@ -13,7 +13,7 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 BioSequences = "3"
 StatsBase = "0.34"
 GenomicAnnotations = "0.3,0.4"
-Kmers = "0.1"
+Kmers = "1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
