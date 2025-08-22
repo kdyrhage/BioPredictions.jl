@@ -11,7 +11,7 @@ function codon_frequencies(chrs)
 end
 
 function optimal_codons(cf)
-    maxf(v) = maximum(map(c -> get(cf, DNACodon(c), 0.0), v))
+    maxf(v) = maximum(map(c -> get(cf, Kmer{DNAAlphabet{4}, 3}(c), 0.0), v))
     oc = Dict(DNACodon("TTT") => maxf(["TTT", "TTC"]), # Phenylalanine
               DNACodon("TTC") => maxf(["TTT", "TTC"]),
               DNACodon("TTA") => maxf(["TTA", "TTG", "CTT", "CTC", "CTA", "CTG"]), # Leucine
