@@ -1,6 +1,6 @@
 module BioPredictions
 
-export pI, weight, gravy, cleave, cai
+export pI, weight, gravy, cleave, cai, gcai
 
 using BioSequences
 using StatsBase

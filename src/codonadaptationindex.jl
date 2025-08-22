@@ -98,3 +98,43 @@ function cai(chrs)
     end
     result
 end
+
+
+function weightfactors(chrs)
+    dict = Dict()
+    ngenes = 0
+    for gene in @genes(chrs, CDS, iscomplete(gene))
+        codons = unique(SpacedKmers{DNACodon}(sequence(gene), 3))
+        for codon in codons
+            get!(dict, codon, 0.0)
+            dict[codon] += 1.0
+        end
+        ngenes += 1
+    end
+    for (codon, count) in dict
+        dict[codon] = count / ngenes
+    end
+    return dict
+end
+
+function gcai(seq::LongDNA, cf, oc, wf)
+    codons = SpacedKmers{DNACodon}(seq, 3)
+    w = fill(0.0, length(collect(codons)))
+    for (i, codon) in enumerate(codons)
+        w[i] = relative_adaptiveness(codon[2], cf, oc)
+    end
+    isempty(w) ? 0.0 : geomean(w)
+end
+gcai(gene, cf, oc, wf) = cai(sequence(gene), cf, oc, wf)
+
+function gcai(chrs)
+    cf = codon_frequencies(chrs)
+    oc = optimal_codons(cf)
+    wf = weightfactors(chrs)
+    genes = @genes(chrs, CDS, iscomplete(gene))
+    result = fill(0.0, length(genes))
+    Threads.@threads for (i, gene) in collect(enumerate(genes))
+        result[i] = cai(gene, cf, oc, wf)
+    end
+    result
+end
