@@ -3,7 +3,7 @@ function codon_frequencies(chrs)
     for gene in @genes(chrs, CDS, iscomplete(gene))
         s *= sequence(gene)
     end
-    cf = countmap(map(last, SpacedKmers{Kmer{DNAAlphabet{4}, 3, 1}}(s, 3)))
+    cf = countmap(map(last, SpacedDNAMers{3, 3}(s)))
 end
 
 function optimal_codons(cf)
@@ -79,7 +79,7 @@ function relative_adaptiveness(codon, cf, oc)
 end
 
 function cai(seq::LongDNA{N}, cf, oc) where N
-    codons = SpacedKmers{Kmer{DNAAlphabet{N}, 3, 1}}(seq, 3)
+    codons = SpacedDNAMers{3, 3}(seq)
     w = fill(0.0, length(collect(codons)))
     for (i, codon) in enumerate(codons)
         w[i] = relative_adaptiveness(codon[2], cf, oc)
@@ -104,7 +104,7 @@ function weightfactors(chrs)
     dict = Dict()
     ngenes = 0
     for gene in @genes(chrs, CDS, iscomplete(gene))
-        codons = unique(SpacedKmers{Kmer{DNAAlphabet{4}, 3, 1}}(sequence(gene), 3))
+        codons = unique(SpacedDNAMers{3, 3}(seuquence(gene)))
         for codon in codons
             get!(dict, codon, 0.0)
             dict[codon] += 1.0
@@ -118,7 +118,7 @@ function weightfactors(chrs)
 end
 
 function gcai(seq::LongDNA{N}, cf, oc, wf) where N
-    codons = SpacedKmers{Kmer{DNAAlphabet{N}, 3, 1}}(seq, 3)
+    codons = SpacedDNAMers{3, 3}(seq)
     w = fill(0.0, length(collect(codons)))
     for (i, codon) in enumerate(codons)
         w[i] = relative_adaptiveness(codon[2], cf, oc)
