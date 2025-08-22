@@ -117,8 +117,8 @@ function weightfactors(chrs)
     return dict
 end
 
-function gcai(seq::LongDNA, cf, oc, wf)
-    codons = SpacedKmers{DNACodon}(seq, 3)
+function gcai(seq::LongDNA{N}, cf, oc, wf) where N
+    codons = SpacedKmers{Kmer{DNAAlphabet{N}, 3, 1}}(seq, 3)
     w = fill(0.0, length(collect(codons)))
     for (i, codon) in enumerate(codons)
         w[i] = relative_adaptiveness(codon[2], cf, oc)
