@@ -104,7 +104,7 @@ function weightfactors(chrs)
     dict = Dict()
     ngenes = 0
     for gene in @genes(chrs, CDS, iscomplete(gene))
-        codons = unique(SpacedKmers{Kmer{DNAAlphabet{N}, 3, 1}}(sequence(gene), 3))
+        codons = unique(SpacedKmers{Kmer{DNAAlphabet{4}, 3, 1}}(sequence(gene), 3))
         for codon in codons
             get!(dict, codon, 0.0)
             dict[codon] += 1.0
