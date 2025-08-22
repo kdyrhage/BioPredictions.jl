@@ -1,5 +1,5 @@
 function codon_frequencies(chrs)
-    s = dna""
+    s = LongDNA{4}()
     for gene in @genes(chrs, CDS, iscomplete(gene))
         s *= sequence(gene)
     end
