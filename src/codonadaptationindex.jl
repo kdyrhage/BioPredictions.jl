@@ -78,8 +78,8 @@ function relative_adaptiveness(codon, cf, oc)
     get(cf, codon, 0.0) / get(oc, codon, 0.0)
 end
 
-function cai(seq::LongDNA, cf, oc)
-    codons = SpacedKmers{DNACodon}(seq, 3)
+function cai(seq::LongDNA{N}, cf, oc) where N
+    codons = SpacedKmers{Kmer{DNAAlphabet{N}, 3, 1}}(seq, 3)
     w = fill(0.0, length(collect(codons)))
     for (i, codon) in enumerate(codons)
         w[i] = relative_adaptiveness(codon[2], cf, oc)
@@ -104,7 +104,7 @@ function weightfactors(chrs)
     dict = Dict()
     ngenes = 0
     for gene in @genes(chrs, CDS, iscomplete(gene))
-        codons = unique(SpacedKmers{DNACodon}(sequence(gene), 3))
+        codons = unique(SpacedKmers{Kmer{DNAAlphabet{N}, 3, 1}}(sequence(gene), 3))
         for codon in codons
             get!(dict, codon, 0.0)
             dict[codon] += 1.0
