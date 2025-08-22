@@ -1,5 +1,5 @@
 function codon_frequencies(chrs)
-    s = LongDNA{4}()
+    s = LongDNA{2}()
     for gene in @genes(chrs, CDS, iscomplete(gene))
         gs = sequence(gene)
         if !isnothing(findfirst(DNA_N, gs))
@@ -11,7 +11,7 @@ function codon_frequencies(chrs)
 end
 
 function optimal_codons(cf)
-    maxf(v) = maximum(map(c -> get(cf, Kmer{DNAAlphabet{4}, 3}(c), 0.0), v))
+    maxf(v) = maximum(map(c -> get(cf, DNACodon(c), 0.0), v))
     oc = Dict(DNACodon("TTT") => maxf(["TTT", "TTC"]), # Phenylalanine
               DNACodon("TTC") => maxf(["TTT", "TTC"]),
               DNACodon("TTA") => maxf(["TTA", "TTG", "CTT", "CTC", "CTA", "CTG"]), # Leucine
@@ -141,7 +141,7 @@ function gcai(chrs)
     oc = optimal_codons(cf)
     wf = weightfactors(chrs)
     genes = @genes(chrs, CDS, iscomplete(gene))#, isnothing(findfirst(DNA_N, sequence(gene))))
-    filter!(g -> !isnothing(findfirst(DNA_N, sequence(g))), genes)
+    filter!(g -> isnothing(findfirst(DNA_N, sequence(g))), genes)
     result = fill(0.0, length(genes))
     Threads.@threads for (i, gene) in collect(enumerate(genes))
         result[i] = gcai(gene, cf, oc, wf)
