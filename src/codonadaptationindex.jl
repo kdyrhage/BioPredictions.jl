@@ -1,9 +1,9 @@
-function codon_frequencies(chrs)
+function codon_frequencies(chrs::AbstractVector{GenomicAnnotations.Chromosome})
     s = dna""
     for gene in @genes(chrs, CDS, iscomplete(gene))
         s *= sequence(gene)
     end
-    cf = countmap(map(last, SpacedKmers{DNACodon}(s, 3)))
+    cf = countmap(map(last, SpacedKmers{Kmer{DNAAlphabet{4}, 3, 1}}(s, 3)))
 end
 
 function optimal_codons(cf)
