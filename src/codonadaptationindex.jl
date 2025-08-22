@@ -106,14 +106,19 @@ end
 
 function weightfactors(chrs)
     dict = Dict()
-    genes = @genes(chrs, CDS, iscomplete(gene), !isnothing(findfirst(DNA_N, sequence(gene))))
-    ngenes = length(genes)
+    genes = @genes(chrs, CDS, iscomplete(gene))
+    ngenes = 0
     for gene in genes
-        codons = each_codon(sequence(gene))
+        gs = sequence(gene)
+        if !isnothing(findfirst(DNA_N, gs))
+            continue
+        end
+        codons = unique(each_codon(gs))
         for codon in codons
             get!(dict, codon, 0.0)
             dict[codon] += 1.0
         end
+        ngenes += 1
     end
     for (codon, count) in dict
         dict[codon] = count / ngenes
