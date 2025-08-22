@@ -3,7 +3,7 @@ function codon_frequencies(chrs)
     for gene in @genes(chrs, CDS, iscomplete(gene))
         s *= sequence(gene)
     end
-    cf = countmap(map(last, SpacedDNAMers{3, 3}(s)))
+    cf = countmap(each_codon(s))
 end
 
 function optimal_codons(cf)
@@ -79,10 +79,10 @@ function relative_adaptiveness(codon, cf, oc)
 end
 
 function cai(seq::LongDNA{N}, cf, oc) where N
-    codons = SpacedDNAMers{3, 3}(seq)
-    w = fill(0.0, length(collect(codons)))
+    codons = each_codon(seq)
+    w = fill(0.0, length(codons))
     for (i, codon) in enumerate(codons)
-        w[i] = relative_adaptiveness(codon[2], cf, oc)
+        w[i] = relative_adaptiveness(codon, cf, oc)
     end
     isempty(w) ? 0.0 : geomean(w)
 end
@@ -104,7 +104,7 @@ function weightfactors(chrs)
     dict = Dict()
     ngenes = 0
     for gene in @genes(chrs, CDS, iscomplete(gene))
-        codons = unique(SpacedDNAMers{3, 3}(seuquence(gene)))
+        codons = each_codon(sequence(gene))
         for codon in codons
             get!(dict, codon, 0.0)
             dict[codon] += 1.0
@@ -118,10 +118,10 @@ function weightfactors(chrs)
 end
 
 function gcai(seq::LongDNA{N}, cf, oc, wf) where N
-    codons = SpacedDNAMers{3, 3}(seq)
-    w = fill(0.0, length(collect(codons)))
+    codons = each_codon(seq)
+    w = fill(0.0, length(codons))
     for (i, codon) in enumerate(codons)
-        w[i] = relative_adaptiveness(codon[2], cf, oc)
+        w[i] = relative_adaptiveness(codon, cf, oc)
     end
     isempty(w) ? 0.0 : geomean(w)
 end
