@@ -1,4 +1,4 @@
-function codon_frequencies(chrs::AbstractVector{GenomicAnnotations.Chromosome})
+function codon_frequencies(chrs)
     s = dna""
     for gene in @genes(chrs, CDS, iscomplete(gene))
         s *= sequence(gene)
