@@ -1,6 +1,10 @@
 function codon_frequencies(chrs)
     s = LongDNA{4}()
     for gene in @genes(chrs, CDS, iscomplete(gene))
+        gs = sequence(gene)
+        if !isnothing(findfirst(DNA_N, gs))
+            continue
+        end
         s *= sequence(gene)
     end
     cf = countmap(each_codon(s))
@@ -91,7 +95,7 @@ cai(gene, cf, oc) = cai(sequence(gene), cf, oc)
 function cai(chrs)
     cf = codon_frequencies(chrs)
     oc = optimal_codons(cf)
-    genes = @genes(chrs, CDS, iscomplete(gene))
+    genes = @genes(chrs, CDS, iscomplete(gene), !isnothing(findfirst(DNA_N, sequence(gene))))
     result = fill(0.0, length(genes))
     Threads.@threads for (i, gene) in collect(enumerate(genes))
         result[i] = cai(gene, cf, oc)
@@ -102,14 +106,14 @@ end
 
 function weightfactors(chrs)
     dict = Dict()
-    ngenes = 0
-    for gene in @genes(chrs, CDS, iscomplete(gene))
+    genes = @genes(chrs, CDS, iscomplete(gene), !isnothing(findfirst(DNA_N, sequence(gene))))
+    ngenes = length(genes)
+    for gene in genes
         codons = each_codon(sequence(gene))
         for codon in codons
             get!(dict, codon, 0.0)
             dict[codon] += 1.0
         end
-        ngenes += 1
     end
     for (codon, count) in dict
         dict[codon] = count / ngenes
@@ -131,7 +135,7 @@ function gcai(chrs)
     cf = codon_frequencies(chrs)
     oc = optimal_codons(cf)
     wf = weightfactors(chrs)
-    genes = @genes(chrs, CDS, iscomplete(gene))
+    genes = @genes(chrs, CDS, iscomplete(gene), !isnothing(findfirst(DNA_N, sequence(gene))))
     result = fill(0.0, length(genes))
     Threads.@threads for (i, gene) in collect(enumerate(genes))
         result[i] = gcai(gene, cf, oc, wf)
