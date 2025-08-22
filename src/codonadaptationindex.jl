@@ -78,7 +78,7 @@ function relative_adaptiveness(codon, cf, oc)
     get(cf, codon, 0.0) / get(oc, codon, 0.0)
 end
 
-function cai(seq::LongDNA{N}, cf, oc) where N
+function cai(seq::LongDNA, cf, oc)
     codons = each_codon(seq)
     w = fill(0.0, length(codons))
     for (i, codon) in enumerate(codons)
@@ -117,7 +117,7 @@ function weightfactors(chrs)
     return dict
 end
 
-function gcai(seq::LongDNA{N}, cf, oc, wf) where N
+function gcai(seq::LongDNA, cf, oc, wf)
     codons = each_codon(seq)
     w = fill(0.0, length(codons))
     for (i, codon) in enumerate(codons)
@@ -125,7 +125,7 @@ function gcai(seq::LongDNA{N}, cf, oc, wf) where N
     end
     isempty(w) ? 0.0 : geomean(w)
 end
-gcai(gene, cf, oc, wf) = cai(sequence(gene), cf, oc, wf)
+gcai(gene, cf, oc, wf) = gcai(sequence(gene), cf, oc, wf)
 
 function gcai(chrs)
     cf = codon_frequencies(chrs)
@@ -134,7 +134,7 @@ function gcai(chrs)
     genes = @genes(chrs, CDS, iscomplete(gene))
     result = fill(0.0, length(genes))
     Threads.@threads for (i, gene) in collect(enumerate(genes))
-        result[i] = cai(gene, cf, oc, wf)
+        result[i] = gcai(gene, cf, oc, wf)
     end
     result
 end
