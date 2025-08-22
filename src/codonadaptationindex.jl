@@ -82,7 +82,7 @@ function relative_adaptiveness(codon, cf, oc)
     get(cf, codon, 0.0) / get(oc, codon, 0.0)
 end
 
-function cai(seq::LongDNA, cf, oc)
+function cai(seq::NucSeq, cf, oc)
     codons = each_codon(seq)
     w = fill(0.0, length(codons))
     for (i, codon) in enumerate(codons)
@@ -126,7 +126,7 @@ function weightfactors(chrs)
     return dict
 end
 
-function gcai(seq::LongDNA, cf, oc, wf)
+function gcai(seq::NucSeq, cf, oc, wf)
     codons = each_codon(seq)
     w = fill(0.0, length(codons))
     for (i, codon) in enumerate(codons)
