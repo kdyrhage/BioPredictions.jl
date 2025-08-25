@@ -130,7 +130,7 @@ function gcai(seq::NucSeq, cf, oc, wf)
     codons = each_codon(seq)
     w = fill(0.0, length(codons))
     for (i, codon) in enumerate(codons)
-        w[i] = relative_adaptiveness(codon, cf, oc)
+        w[i] = get(wf, codon, 0.0) * relative_adaptiveness(codon, cf, oc)
     end
     isempty(w) ? 0.0 : geomean(w)
 end
